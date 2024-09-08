@@ -24,7 +24,7 @@ const clearError = input => {
 	formBox.classList.remove("error");
 };
 
-// funkcja sprawdzająca formularz
+// funkcja sprawdzająca czy formularz jest wypełniony
 // argument INPUT z funkcji "checkForm" przechowuje tablicę z naszymi inputami
 // argument EL odnosi się do każdej zmiennej, którą umieściliśmy w tablicy
 const checkForm = input => {
@@ -71,12 +71,31 @@ const checkMail = email => {
 	}
 };
 
+// funkcja sprawdzająca ilość niepoprawnych danych w formularzu przed wysyłką
+const checkErrors = () => {
+	const allInputs = document.querySelectorAll(".form-box");
+	let errorCount = 0;
+
+	allInputs.forEach(el => {
+		if (el.classList.contains("error")) {
+			errorCount++;
+		}
+	});
+
+	if (errorCount === 0) {
+		popup.classList.add("show-popup");
+	}
+
+	console.log(errorCount);
+};
+
 // przycisk Wyczyść
 clearBtn.addEventListener("click", e => {
 	e.preventDefault();
 
 	[username, pass, pass2, email].forEach(el => {
 		el.value = "";
+		clearError(el);
 	});
 });
 
@@ -89,4 +108,5 @@ sendBtn.addEventListener("click", e => {
 	checkLength(pass, 8);
 	checkPassword(pass, pass2);
 	checkMail(email);
+	checkErrors();
 });
