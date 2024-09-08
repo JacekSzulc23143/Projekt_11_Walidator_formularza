@@ -39,6 +39,26 @@ const checkForm = input => {
 	});
 };
 
+// funkcja sprawdzająca długość znaków
+const checkLength = (input, min) => {
+	if (input.value.length < min) {
+		showError(
+			input,
+			`${input.previousElementSibling.innerText.slice(
+				0,
+				-1
+			)} musi składać się z minimum ${min} znaków.`
+		);
+	}
+};
+
+// funkcja sprawdzająca zgodność haseł w obydwu polach input
+const checkPassword = (pass, pass2) => {
+	if (pass.value !== pass2.value) {
+		showError(pass2, "Hasła do siebie nie pasują.");
+	}
+};
+
 // przycisk Wyczyść
 clearBtn.addEventListener("click", e => {
 	e.preventDefault();
@@ -53,4 +73,7 @@ sendBtn.addEventListener("click", e => {
 	e.preventDefault();
 
 	checkForm([username, pass, pass2, email]);
+	checkLength(username, 3);
+	checkLength(pass, 8);
+	checkPassword(pass, pass2);
 });
