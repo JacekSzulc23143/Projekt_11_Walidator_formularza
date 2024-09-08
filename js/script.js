@@ -41,7 +41,9 @@ const checkForm = input => {
 
 // funkcja sprawdzająca długość znaków
 const checkLength = (input, min) => {
-	if (input.value.length < min) {
+	if (input.value === "") {
+		showError(input, input.placeholder);
+	} else if (input.value.length < min) {
 		showError(
 			input,
 			`${input.previousElementSibling.innerText.slice(
@@ -54,7 +56,9 @@ const checkLength = (input, min) => {
 
 // funkcja sprawdzająca zgodność haseł w obydwu polach input
 const checkPassword = (pass1, pass2) => {
-	if (pass1.value !== pass2.value) {
+	if (pass2.value === "") {
+		showError(pass2, pass2.placeholder);
+	} else if (pass1.value !== pass2.value) {
 		showError(pass2, "Hasła do siebie nie pasują.");
 	}
 };
@@ -66,6 +70,8 @@ const checkMail = email => {
 
 	if (re.test(email.value)) {
 		clearError(email);
+	} else if (email.value === "") {
+		showError(email, email.placeholder);
 	} else {
 		showError(email, "e-mail jest niepoprawny");
 	}
